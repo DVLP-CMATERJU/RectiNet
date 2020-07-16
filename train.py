@@ -38,7 +38,7 @@ def get_args():
     parser.add_argument('--lr', default=0.005, help='learning rate')
     parser.add_argument('--epochs', default=100, help='epochs')
     parser.add_argument('--batch-size', default=16, help='batch size')
-    parser.add_argument('--data-path', default='../../data_gen_small/gen_test/',help='dataset path')
+    parser.add_argument('--data-path', default='./data_gen/',help='dataset path')
     parser.add_argument('--pre-trained', default=False, help='use pre trained model')
     parser.add_argument('--pre-trained-path',help='pre trained model path')
     parser.add_argument('--parallel',default=False,help='Set to True to train on parallel GPUs')

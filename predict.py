@@ -91,7 +91,16 @@ def predict(model_path,img_path,save_path,scan_path,check,filename):
     model = Net().cuda()
     model=torch.nn.DataParallel(model).cuda()
 
-    model.load_state_dict(torch.load(model_path))
+    
+    
+    model_dict = model.state_dict()
+    state_dict = torch.load(model_path)
+    
+    state_dict = {k: v for k, v in state_dict.items() if k in model_dict}
+    model_dict.update(state_dict) 
+    
+    model.load_state_dict(state_dict)
+
     model.eval()
     with torch.no_grad():
         input_ = transforms(input_img).cuda()

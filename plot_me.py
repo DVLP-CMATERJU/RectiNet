@@ -25,7 +25,7 @@ def plot(training_loss,validation_loss,plot_path="."):
 	
 	plt.plot(list(range(len(training_loss))),training_loss,color="r",label="Training Loss")
 	plt.plot(list(range(len(validation_loss))),validation_loss,color="b",label="Validation Loss")
-	plt.legend()
+	
 
 	plt.savefig(plot_path+"loss_plot.png")
 	

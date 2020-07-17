@@ -131,24 +131,11 @@ class res(nn.Module):
         self.c1=nn.Sequential(
             nn.Conv2d(in_channels=in_channels,out_channels=in_channels,kernel_size=3,stride=1,padding=1),
             nn.ReLU(inplace=True))
-        self.c2=nn.Sequential(
-            nn.Conv2d(in_channels=in_channels,out_channels=in_channels,kernel_size=3,stride=1,padding=1),
-            nn.ReLU(inplace=True))
-        self.c3=nn.Sequential(
-            nn.Conv2d(in_channels=in_channels*2,out_channels=in_channels,kernel_size=3,stride=1,padding=1),
-            nn.ReLU(inplace=True))
-        self.c=nn.Conv2d(in_channels=in_channels*2,out_channels=in_channels,kernel_size=1)
-
+        
     def forward(self,x):
         x1=self.c1(x)
-        x2=self.c2(x1)
-        
-        x=torch.cat([x2,x],dim=1)
-        
-        x=self.c3(x)
-        x=torch.cat([x1,x])
-
         return x1
+
 
 
 
@@ -187,7 +174,7 @@ class Net(nn.Module):
             Conv_block(512, 1024),
         )
 
-        
+        self.out_conv = nn.Conv2d(in_channels=2, out_channels=2, kernel_size=1, stride=1)
         self.res_1=res(64)
         self.res_2=res(128)
         self.res_3=res(256)
@@ -217,7 +204,7 @@ class Net(nn.Module):
         )
 
 
-        self.out_conv = nn.Conv2d(in_channels=2, out_channels=2, kernel_size=1, stride=1)
+        
 
         
         self.down2_conv0=Conv_block(50, 32)
@@ -302,14 +289,14 @@ class Net(nn.Module):
         self.res2 = BasicBlock(32, 32, stride=1, downsample=None)
         self.d2 = nn.Conv2d(32, 16, 1)
         self.res3 = BasicBlock(16, 16, stride=1, downsample=None)
-        self.d3 = nn.Conv2d(16, 8, 1)
-        self.fuse = nn.Conv2d(8, 1, kernel_size=1, padding=0, bias=False)
+        
+        
 
         self.cw = nn.Conv2d(2, 1, kernel_size=1, padding=0, bias=False)
 
         self.gate1 = GatedSpatialConv2d(32, 32)
         self.gate2 = GatedSpatialConv2d(16, 16)
-        self.gate3 = GatedSpatialConv2d(8, 8)
+        
         self.sigmoid=nn.Sigmoid()
         self.conv_bound=nn.Conv2d(in_channels=16,out_channels=1,kernel_size=3,padding=1)
 
@@ -347,6 +334,7 @@ class Net(nn.Module):
         x = self.down_conv4(x)
         x_4=x.clone()
         features_stack.append(self.res_4(x))
+        
         x = self.down_conv5(x)
 
         xa = F.interpolate(self.dsn1(x_1), x_size[2:],
@@ -374,17 +362,18 @@ class Net(nn.Module):
         cs = F.interpolate(cs, x_size[2:],
                            mode='bilinear', align_corners=True)
 
-        out_bound = cs
+        out_border = cs
 
-        out_bound=self.out_conv_(out_bound)
+        out_border=self.out_conv_(out_border)
 
-        out_bound_out= self.conv_bound(out_bound)
+        out_border_out= self.conv_bound(out_border)
 
-        out_bound_out= self.sigmoid(out_bound_out)
+        out_border_out= self.sigmoid(out_border_out)
 
 
 
         x = self.up_conv1(x)
+        
         x = torch.cat((features_stack.pop(), x), dim=1)
         x = self.up_conv1_later(x)
 
@@ -399,16 +388,19 @@ class Net(nn.Module):
         x = self.up_conv4(x)
         x = torch.cat((features_stack.pop(), x), dim=1)
         x = self.up_conv4_later(x)
+
         x = self.up_conv5(x)
+        
         x = self.up_conv5_later(x)
 
 
 
         out1 = self.out_conv(x)
 
+
         
 
-        x = torch.cat((x_lose, out1,out_bound), dim=1)
+        x = torch.cat((x_lose, out1,out_border), dim=1)
         
         x_lose=self.down2_conv0(x)
         x = self.down2_conv1(x_lose)
@@ -457,9 +449,9 @@ class Net(nn.Module):
         x = torch.cat((x,x_lose), dim=1)
         x = self.up2_conv5_later(x)
 
-        out2 = self.tanh((x))
+        out2_a = self.tanh((x))
 
-        x=x1
+        
 
         features_stack_2=feat_cpy
         x = self.up2_conv1_(x1)
@@ -485,16 +477,16 @@ class Net(nn.Module):
         x = torch.cat((x,x_lose), dim=1)
         x = self.up2_conv5_later_(x)
 
-        out21 = self.tanh((x))
+        out2_b = self.tanh((x))
 
 
-        out2=torch.cat([out2.permute(0,2,3,1),out21.permute(0,2,3,1)],dim=3)
+        out2=torch.cat([out2_a.permute(0,2,3,1),out2_b.permute(0,2,3,1)],dim=3)
 
 
 
 
 
-        return out2,out_bound_out
+        return out2,out_border_out
 
 if __name__ == '__main__':
         

@@ -30,6 +30,16 @@ from tqdm import tqdm
 from dataset import DataSet
 from model import Net
 from plot_me import plot
+def initialize_weights(*models):
+   for model in models:
+        for module in model.modules():
+            if isinstance(module, nn.Conv2d) or isinstance(module, nn.Linear):
+                nn.init.xavier_uniform_(module.weight)
+                if module.bias is not None:
+                    module.bias.data.zero_()
+            elif isinstance(module, nn.BatchNorm2d):
+                module.weight.data.fill_(1)
+                module.bias.data.zero_()
 
 
 def get_args():
@@ -203,14 +213,21 @@ if parser.parallel:
 else:
     model=model.cuda()
 
+
 optimizer = optim.Adam(model.parameters(), lr=float(parser.lr),betas=(float(parser.beta1),float(parser.beta2)))
 first=0
 
 if parser.pre_trained:
     pre=1
     assert os.path.exists(parser.pre_trained_path), 'Wrong path for pre-trained model'
+    model_dict = model.state_dict()
     state_dict = torch.load(parser.pre_trained_path)
+    
+    state_dict = {k: v for k, v in state_dict.items() if k in model_dict}
+    model_dict.update(state_dict) 
+    
     model.load_state_dict(state_dict)
+
     print(f'model {parser.pre_trained_path} loaded')
     path1=parser.pre_trained_path
     first=int(path1[path1.rindex("/")+1:path1.rindex(".")])

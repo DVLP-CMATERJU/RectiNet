@@ -1,4 +1,4 @@
-# RectNet
+# RectiNet
 ## A Gated and Bifurcated Stacked U-Net Module for Document Image Dewarping
 
 Capturing images of documents is one of the easiest

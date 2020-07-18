@@ -30,17 +30,6 @@ from tqdm import tqdm
 from dataset import DataSet
 from model import Net
 from plot_me import plot
-def initialize_weights(*models):
-   for model in models:
-        for module in model.modules():
-            if isinstance(module, nn.Conv2d) or isinstance(module, nn.Linear):
-                nn.init.xavier_uniform_(module.weight)
-                if module.bias is not None:
-                    module.bias.data.zero_()
-            elif isinstance(module, nn.BatchNorm2d):
-                module.weight.data.fill_(1)
-                module.bias.data.zero_()
-
 
 def get_args():
 

@@ -134,10 +134,15 @@ if __name__=='__main__':
         print("Multi Disabled")
         
         file=img_path   
-        filename=(save_path+"/"+file[file.rindex("/")+1:file.rindex(".")]+"dewarp.png")
+        try:
+            filename=(save_path+"/"+file[file.rindex("/")+1:file.rindex(".")]+"dewarp.png")
+        except:
+            filename=img_path[:img_path.rindex('.')]+"dewarp.png"
         predict(model_path,img_path,save_path,scan_path,check,filename)
-        
-        print("Written ",img_path[img_path.rindex("/")+1:img_path.rindex(".")])
+        try:
+            print("Written ",img_path[img_path.rindex("/")+1:img_path.rindex(".")])
+        except:
+            print("Written",img_path[:img_path.rindex('.')])
 
 
     

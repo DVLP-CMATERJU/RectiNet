@@ -119,11 +119,6 @@ class GatedSpatialConv2d(_ConvNd):
             nn.init.zeros_(self.bias)
 
 
-class Conv2dPad(nn.Conv2d):
-    def forward(self, input):
-        return F.conv2d_same(input,self.weight,self.groups)
-
-
 
 class res(nn.Module):
     def __init__(self,in_channels,**kwargs):
@@ -279,7 +274,6 @@ class Net(nn.Module):
         self.out2_conv = nn.Conv2d(in_channels=8, out_channels=2, kernel_size=1, stride=1)
 
 
-        self.dsn1 = nn.Conv2d(64, 1, 1)
         self.dsn3 = nn.Conv2d(256, 1, 1)
         self.dsn4 = nn.Conv2d(512, 1, 1)
 
@@ -337,9 +331,7 @@ class Net(nn.Module):
         
         x = self.down_conv5(x)
 
-        xa = F.interpolate(self.dsn1(x_1), x_size[2:],
-                            mode='bilinear', align_corners=True)
-
+        
         xb = F.interpolate(self.dsn3(x_3), x_size[2:],
                             mode='bilinear', align_corners=True)
         xc = F.interpolate(self.dsn4(x_4), x_size[2:],

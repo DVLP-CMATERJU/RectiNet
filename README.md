@@ -1,4 +1,6 @@
 # RectiNet
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/a-gated-and-bifurcated-stacked-u-net-module/ssim-on-docunet)](https://paperswithcode.com/sota/ssim-on-docunet?p=a-gated-and-bifurcated-stacked-u-net-module)
+
 ## A Gated and Bifurcated Stacked U-Net Module for Document Image Dewarping
 
 Capturing images of documents is one of the easiest

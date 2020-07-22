@@ -20,6 +20,7 @@ performance on the DocUNet dataset after being trained on just
 8 percent of the data used in previous methods.
 
 ---
+![Screenshot](images/readme.png?raw=true "RectiNet")
 
 ### Training the model
 
@@ -28,27 +29,27 @@ performance on the DocUNet dataset after being trained on just
 
 .
 +-- data_gen
-|	+-- .
+|   +-- .
 |   +-- image
 |   +-- label
 |   +-- image_test
 +-- model_save
-|	+-- .
+|   +-- .
 +-- loader
-|	+-- .
-|	+-- __init__.py
-|	+-- dataset.py
+|   +-- .
+|   +-- __init__.py
+|   +-- dataset.py
 +-- unets
-|	+-- .
-|	+-- __init__.py
-|	+-- Punet.py
-|	+-- Sunet.py
+|   +-- .
+|   +-- __init__.py
+|   +-- Punet.py
+|   +-- Sunet.py
 +-- utils
-|	+-- .
-|	+--	__init.py
-|	+--	GCN.py
-|	+--	plot_me.py
-|	+-- utils_model.py
+|   +-- .
+|   +-- __init.py
+|   +-- GCN.py
+|   +-- plot_me.py
+|   +-- utils_model.py
 +-- model.py
 +-- predict.py
 +-- train.py

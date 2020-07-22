@@ -22,7 +22,8 @@ performance on the DocUNet dataset after being trained on just
 ---
 
 ### Training the model
-- Directory Structure:
+
+- Required Directory Structure:
 ```
 .
 +-- train.py
@@ -34,25 +35,40 @@ performance on the DocUNet dataset after being trained on just
 |   +-- image
 |   +-- label
 |   +-- image_test
++-- model_save
 ```
 - Run:
 `python3 train.py --batch-size 16`
-- For custom location of training data:
+- For custom location of training data run:
 `python3 train.py --batch-size 16 --data-path PATH_TO_DATA`
-- For more parameters:
+- For more parameters run:
 ` python3 train.py -help`
 
 
 
 ### Dense Grid Prediction and Image Unwarp
+
 - In same directory:
 ` mkdir save`
 - For predicting single image:
-` python3 predict.py --save-path save --img-path IMAGE_PATH --model-path SAVED_MODEL_PATH --multi=False`
+` python3 predict.py --save-path save --img-path IMAGE_PATH --model-path model_save/SAVED_MODEL_PATH --multi=False`
 - For predicting many image in a folder:
-` python3 predict.py --save-path save --img-path IMAGE_FOLDER_PATH --model-path SAVED_MODEL_PATH --multi=True`
+` python3 predict.py --save-path save --img-path IMAGE_FOLDER_PATH --model-path model_save/SAVED_MODEL_PATH --multi=True`
 - For more parameters:
 ` python3 predict.py -help`
 
+
+### Loading pre-trained Model
+
+- Download model weights [here](https://drive.google.com/file/d/1Q_cWtIX-quCizX8huznfcIYJKxCOkTSZ/view?usp=sharing "RectiNet Weights")
+- Save under `model_save` folder
+- Run:
+` python3 predict.py --save-path save --img-path IMAGE_PATH --model-path model_save/weights.pt --multi=False`
+
+### Todo
+
+- [X] Upload pre-trained weights for predictions
+- [ ] Upload Images for Evaluation
+- [ ] Increase code readability
 
 

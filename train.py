@@ -27,9 +27,9 @@ import torchvision.transforms
 from tqdm import tqdm
 
 
-from dataset import DataSet
+from loader.dataset import DataSet
 from model import Net
-from plot_me import plot
+from utils.plot_me import plot
 
 def get_args():
 

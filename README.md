@@ -25,17 +25,34 @@ performance on the DocUNet dataset after being trained on just
 
 - Required Directory Structure:
 ```
+
 .
-+-- train.py
-+-- dataset.py
-+-- model.py
-+-- plot_me.py
-+-- predict.py
 +-- data_gen
+|	+-- .
 |   +-- image
 |   +-- label
 |   +-- image_test
 +-- model_save
+|	+-- .
++-- loader
+|	+-- .
+|	+-- __init__.py
+|	+-- dataset.py
++-- unets
+|	+-- .
+|	+-- __init__.py
+|	+-- Punet.py
+|	+-- Sunet.py
++-- utils
+|	+-- .
+|	+--	__init.py
+|	+--	GCN.py
+|	+--	plot_me.py
+|	+-- utils_model.py
++-- model.py
++-- predict.py
++-- train.py
+
 ```
 - Run:
 `python3 train.py --batch-size 16`

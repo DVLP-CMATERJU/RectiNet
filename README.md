@@ -1,4 +1,4 @@
-# RectiNet
+# [RectiNet](https://arxiv.org/abs/2007.09824)
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/a-gated-and-bifurcated-stacked-u-net-module/ssim-on-docunet)](https://paperswithcode.com/sota/ssim-on-docunet?p=a-gated-and-bifurcated-stacked-u-net-module)
 
 ## A Gated and Bifurcated Stacked U-Net Module for Document Image Dewarping
@@ -64,6 +64,20 @@ performance on the DocUNet dataset after being trained on just
 - Save under `model_save` folder
 - Run:
 ` python3 predict.py --save-path save --img-path IMAGE_PATH --model-path model_save/weights.pt --multi=False`
+
+### Citation
+
+If you use this code please consider citing :
+```
+@misc{b2020gated,
+    title={A Gated and Bifurcated Stacked U-Net Module for Document Image Dewarping},
+    author={Hmrishav Bandyopadhyay and Tanmoy Dasgupta and Nibaran Das and Mita Nasipuri},
+    year={2020},
+    eprint={2007.09824},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
+```
 
 ### Todo
 

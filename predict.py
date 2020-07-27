@@ -27,6 +27,16 @@ import torchvision.transforms
 
 from model import Net
 
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
 
 def unwarp(img, bm,img_scan):
     w,h=img_scan.shape[0],img_scan.shape[1]
@@ -61,9 +71,9 @@ def get_args():
     parser.add_argument('--model-path', help='model path')
     parser.add_argument('--img-path', help='image path or path to folder containing images (set multi as true)')
     parser.add_argument('--save-path', help='save path')
-    parser.add_argument('--check', default=False ,help='True if Checking for MS-SSIM on Scanned images')
+    parser.add_argument('--check', default=False ,type=str2bool,help='True if Checking for MS-SSIM on Scanned images')
     parser.add_argument('--scan-path', default="",help='Scanned Image path -- only if verifying MS-SSIM')
-    parser.add_argument('--multi', default=False ,help='True if predicting Multiple Images in same folder')
+    parser.add_argument('--multi', default=False,type=str2bool ,help='True if predicting Multiple Images in same folder')
     return parser.parse_args()
 
 

@@ -113,9 +113,8 @@ def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_p
         print("Epoch ",epoch)
         model.train()
         if not testing:
-            for param_group in optimizer.param_groups:
-                print("Learning Rate",param_group['lr'])
-                break
+            print("Learning Rate",optimizer.param_groups[0]['lr'])
+
 
         lamda=0.9
         train_samples=len(train_loader.dataset)

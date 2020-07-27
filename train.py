@@ -30,6 +30,17 @@ from tqdm import tqdm
 from loader.dataset import DataSet
 from model import Net
 from utils.plot_me import plot
+from utils.utils_model import initialize_weights
+
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def get_args():
 
@@ -38,13 +49,14 @@ def get_args():
     parser.add_argument('--epochs', default=100, help='epochs')
     parser.add_argument('--batch-size', default=16, help='batch size')
     parser.add_argument('--data-path', default='./data_gen/',help='dataset path')
-    parser.add_argument('--pre-trained', default=False, help='use pre trained model')
+    parser.add_argument('--pre-trained', default=False,type=str2bool, help='use pre trained model')
     parser.add_argument('--pre-trained-path',help='pre trained model path')
-    parser.add_argument('--parallel',default=False,help='Set to True to train on parallel GPUs')
+    parser.add_argument('--parallel',default=False,type=str2bool,help='Set to True to train on parallel GPUs')
     parser.add_argument('--beta1',default=0.9,help='Beta Values for Adam Optimizer')
     parser.add_argument('--beta2',default=0.999,help='Beta Values for Adam Optimizer')
-    parser.add_argument('--log',default=True,help='Set to False to stop logging')
+    parser.add_argument('--log',default=True,type=str2bool,help='Set to False to stop logging')
     parser.add_argument('--save-path',default="./model_save",help='Save Model')
+    parser.add_argument('--testing',default=True,type=str2bool,help='To test or not to test')
     return parser.parse_args()
 
 pre=0
@@ -53,7 +65,7 @@ def scheduler(epoch):
     if pre:
         return 1
 
-    if epoch==1:
+    if epoch<=1:
         return 0.6 
     
     else:
@@ -68,7 +80,7 @@ def clear():
         _ = os.system('clear')         
 
 
-def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_path,log,testing=True):
+def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_path,log,testing):
     global pre
     
     if pre:
@@ -98,7 +110,7 @@ def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_p
     loss_train=[]
     loss_val=[]
     for epoch in range(first+1,epochs):        
-        
+        print("Epoch ",epoch)
         model.train()
         if not testing:
             for param_group in optimizer.param_groups:
@@ -121,6 +133,7 @@ def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_p
                 grid=grid.squeeze()
                 optimizer.zero_grad()
                 loss_grid=nn.MSELoss()(out1,grid)
+
                 loss_output=loss_grid+(lamda*(nn.BCELoss()(out2.float(),edges.float())))
                 loss_output.backward()
                 optimizer.step()
@@ -138,6 +151,7 @@ def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_p
             loss_train.append(loss_sum_train/train_samples)
             print('Epoch {}, Training Loss{:.9f}'.format(str(epoch), (loss_sum_train/train_samples)))   
         
+        
         with torch.no_grad():
             model.eval()
             test_samples=len(test_loader.dataset)
@@ -147,7 +161,6 @@ def train(model,batch_size, first,epochs, train_data,test_data, optimizer,save_p
 
             with tqdm(total=batches) as pbar:
                 for inputs, edges,grid in test_loader:
-                    
                     if testing:
                         pbar.update(batches)
                         break
@@ -197,12 +210,13 @@ data_path = parser.data_path
 assert data_path and os.path.isdir(data_path), 'Wrong Data path'
 
 model = Net()
+
 if parser.parallel:
     model=torch.nn.DataParallel(model).cuda()
 else:
     model=model.cuda()
-
-
+model.apply(initialize_weights)
+print("Weights initialized by kaiming initialization")
 optimizer = optim.Adam(model.parameters(), lr=float(parser.lr),betas=(float(parser.beta1),float(parser.beta2)))
 first=0
 
@@ -234,5 +248,7 @@ transform_test = torchvision.transforms.Compose([
 
 dataset_train = DataSet(os.path.join(data_path, 'image'), os.path.join(data_path, 'label'), transform)
 dataset_test = DataSet(os.path.join(data_path, 'image_test'), os.path.join(data_path, 'label'), transform)
-    
-train(model, int(parser.batch_size), first,int(parser.epochs), dataset_train,dataset_test, optimizer, parser.save_path,parser.log)
+
+if parser.testing:
+	print("You have opted for tests")
+train(model, int(parser.batch_size), first,int(parser.epochs), dataset_train,dataset_test, optimizer, parser.save_path,parser.log,parser.testing)

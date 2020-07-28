@@ -68,10 +68,12 @@ performance on the DocUNet dataset after being trained on just
 
 - In same directory:
 ` mkdir save`
+- Navigate to predict directory
+` cd predict/ `
 - For predicting single image:
-` python3 predict.py --save-path save --img-path IMAGE_PATH --model-path model_save/SAVED_MODEL_PATH --multi=False`
+` python3 predict.py --save-path ../save --img-path IMAGE_PATH --model-path ../model_save/SAVED_MODEL_PATH --multi=False`
 - For predicting many image in a folder:
-` python3 predict.py --save-path save --img-path IMAGE_FOLDER_PATH --model-path model_save/SAVED_MODEL_PATH --multi=True`
+` python3 predict.py --save-path ../save --img-path IMAGE_FOLDER_PATH --model-path ../model_save/SAVED_MODEL_PATH --multi=True`
 - For more parameters:
 ` python3 predict.py -help`
 

@@ -39,6 +39,10 @@ performance on the DocUNet dataset after being trained on just
 |   +-- .
 |   +-- __init__.py
 |   +-- dataset.py
++-- predict
+|   +-- .
+|   +-- model_pred.py
+|   +-- predict.py
 +-- unets
 |   +-- .
 |   +-- __init__.py
@@ -51,7 +55,6 @@ performance on the DocUNet dataset after being trained on just
 |   +-- plot_me.py
 |   +-- utils_model.py
 +-- model.py
-+-- predict.py
 +-- train.py
 
 ```

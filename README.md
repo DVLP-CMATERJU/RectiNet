@@ -22,9 +22,19 @@ performance on the DocUNet dataset after being trained on just
 ---
 ![Screenshot](images/readme.png?raw=true "RectiNet")
 
+### Requirements
+
+Required packages:
+- torch (>1.4.0)
+- torchvision (>0.6.0)
+- numpy (>1.18.4)
+
+To install all required packages, use 
+`pip install -r requirements.txt`
+
 ### Training the model
 
-- Required Directory Structure:
+Required Directory Structure:
 ```
 
 .
@@ -73,9 +83,9 @@ performance on the DocUNet dataset after being trained on just
 ` mkdir save`
 - Navigate to predict directory
 ` cd predict/ `
-- For predicting single image:
+- - For predicting single image:
 ` python3 predict.py --save-path ../save --img-path IMAGE_PATH --model-path ../model_save/SAVED_MODEL_PATH --multi=False`
-- For predicting many image in a folder:
+- - For predicting many image in a folder:
 ` python3 predict.py --save-path ../save --img-path IMAGE_FOLDER_PATH --model-path ../model_save/SAVED_MODEL_PATH --multi=True`
 - For more parameters:
 ` python3 predict.py -help`

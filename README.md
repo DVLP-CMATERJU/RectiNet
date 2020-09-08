@@ -91,6 +91,10 @@ Required Directory Structure:
 ` python3 predict.py -help`
 
 
+### Generating data
+
+   For generating your own dataset, follow [this repository](https://github.com/XiyanLiu/AGUN)
+
 ### Loading pre-trained Model
 
 - Download model weights [here](https://drive.google.com/file/d/1Q_cWtIX-quCizX8huznfcIYJKxCOkTSZ/view?usp=sharing "RectiNet Weights")

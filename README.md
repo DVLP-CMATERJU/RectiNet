@@ -20,6 +20,10 @@ performance on the DocUNet dataset after being trained on just
 8 percent of the data used in previous methods.
 
 ---
+<p align="center">
+  <img src="RectiNet_res.gif" />
+</p>
+
 ![Screenshot](images/readme.png?raw=true "RectiNet")
 
 ### Requirements

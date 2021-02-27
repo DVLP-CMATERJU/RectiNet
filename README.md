@@ -100,7 +100,9 @@ Required Directory Structure:
    For generating your own dataset, follow [this repository](https://github.com/XiyanLiu/AGUN)
    
 ### Note:
-   Please note that we used Matlab 2018b for implementing SSIM (Structural Similarity Index) and MS-SSIM ( Multi-Scale Structural Similarity Index) values. Matlab 2020a, however, uses a different SSIM implementation. Do take that into consideration while comparing your results with the values in our paper. 
+- Please note that we used Matlab 2018b for implementing SSIM (Structural Similarity Index) and MS-SSIM ( Multi-Scale Structural Similarity Index) values. Matlab 2020a, however, uses a different SSIM implementation. Do take that into consideration while comparing your results with the values in our paper. 
+- Please use the 'Discussion' option to ask questions about the code instead of raising an issue -- unless it has something to do with an error in the code.
+
 
 ### Loading pre-trained Model
 

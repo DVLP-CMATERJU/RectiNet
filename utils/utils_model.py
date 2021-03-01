@@ -16,6 +16,18 @@ Code references:
 from torch import nn
 import torch.nn.functional as F
 
+def initialize_weights(*models):
+   for model in models:
+        for module in model.modules():
+            if isinstance(module, nn.Conv2d) or isinstance(module, nn.Linear):
+                if isinstance(module, nn.Conv2d):
+                    nn.init.kaiming_normal_(module.weight,a=0,mode='fan_in')
+                if module.bias is not None:
+                    module.bias.data.zero_()
+            elif isinstance(module, nn.BatchNorm2d):
+                module.weight.data.fill_(1)
+                module.bias.data.zero_()
+
 def conv3x3(in_planes, out_planes, stride=1):
     
     return nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,

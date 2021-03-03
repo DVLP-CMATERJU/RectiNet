@@ -97,7 +97,7 @@ Required Directory Structure:
 
 ### Generating data
 
-   For generating your own dataset, follow [this repository](https://github.com/XiyanLiu/AGUN)
+   For generating your own dataset, follow [this repository](https://github.com/XiyanLiu/AGUN). Do note, they use pkl to save the ground truth dense grid while I make use of npz. To get save arrays as npz, just change the way the grid is saved in the generation code.
    
 ### Note:
 - Please note that we used Matlab 2018b for implementing SSIM (Structural Similarity Index) and MS-SSIM ( Multi-Scale Structural Similarity Index) values. Matlab 2020a, however, uses a different SSIM implementation. Do take that into consideration while comparing your results with the values in our paper. 

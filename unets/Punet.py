@@ -194,4 +194,4 @@ class Punet(nn.Module):
 
         x = torch.cat((x_lose, out1,out_border), dim=1)
         
-        return x,out1
+        return x,out_border_our

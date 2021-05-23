@@ -26,6 +26,8 @@ performance on the DocUNet dataset after being trained on just
 
 ![Screenshot](images/readme.png?raw=true "RectiNet")
 
+### Demo 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1aBFOIAZ5JHaoQsw4ihC0usZP0ZI-jlLE?usp=sharing)
 ### Requirements
 
 Required packages:
